@@ -55,11 +55,11 @@ import { defineComponent, ref, computed, onMounted } from 'vue'
 import createAuthStore from '../components/auth/auth.store'
 
 const images = [
-  require('../../assets/Collab-pana.svg'),
-  require('../../assets/Group discussion-pana.svg'),
-  require('../../assets/Conversation-pana.svg'),
-  require('../../assets/People talking-pana.svg'),
-  require('../../assets/Solidarity-pana.svg')
+  '../../custom_assets/Collab-pana.svg',
+  '../../custom_assets/Group discussion-pana.svg',
+  '../../custom_assets/Conversation-pana.svg',
+  '../../custom_assets/People talking-pana.svg',
+  '../../custom_assets/Solidarity-pana.svg'
 ]
 
 export default defineComponent({
