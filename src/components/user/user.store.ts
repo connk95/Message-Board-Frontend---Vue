@@ -3,7 +3,7 @@ import type { User, UserState } from './user.type'
 import { fetchUser } from './user.actions'
 
 const initialState: UserState = {
-  user: {} as User,
+  user: null,
   error: '',
   loading: false
 }

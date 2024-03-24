@@ -4,7 +4,7 @@ import { fetchPosts, fetchSinglePost, newPost } from './post.actions'
 
 const initialState: PostState = {
   allPosts: [],
-  singlePost: {} as Post,
+  singlePost: null,
   error: '',
   loading: false
 }

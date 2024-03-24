@@ -1,53 +1,39 @@
 <template>
-  <Container
-    component="main"
-    maxWidth="false"
-    :style="{
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      alignContent: 'center',
-      flexWrap: 'wrap',
-      width: '100vw',
-      height: '100vh',
-      background: '#a5bf7c',
-      margin: '0',
-      padding: '0'
-    }"
+  <v-container
+    fluid
+    class="d-flex flex-row"
+    style="height: 92vh; background-color: #a5bf7c; margin: 0; padding: 0"
   >
-    <Box component="img" :src="currentImage" :style="{ width: '70vw' }"></Box>
-    <Box style="display: flex; flex-direction: column">
-      <template v-if="authState.loggedInUser?.access_token">
-        <Button variant="contained" href="/home" :style="{ width: '240px', mt: '2' }">
-          Home
-        </Button>
-      </template>
-      <template v-else>
-        <Typography :style="{ color: 'white', fontSize: '20px' }"> Join ChatBox today. </Typography>
-        <Button
-          variant="contained"
-          href="/signup"
-          name="signup"
-          :style="{ width: '240px', mt: '2' }"
-        >
+    <v-img :src="currentImage" width="65vw"></v-img>
+    <v-col cols="12" md="4" class="d-flex flex-column align-center justify-center">
+      <v-container v-if="authState.loggedInUser?.access_token" class="my-2">
+        <v-typography class="white--text" style="font-size: 20px; color: white">
+          Join ChatBox today.
+        </v-typography>
+        <v-btn color="#23532c" href="/home" class="my-2" style="width: 240px"> Home </v-btn>
+      </v-container>
+      <v-container v-else class="d-flex flex-column align-center">
+        <v-typography class="white--text" style="font-size: 20px; color: white">
+          Join ChatBox today.
+        </v-typography>
+        <v-btn color="#23532c" href="/signup" class="my-2" style="width: 240px">
           Create Account
-        </Button>
-        <Typography :style="{ color: 'white', mt: '2', fontSize: '20px' }">
+        </v-btn>
+      </v-container>
+      <v-container class="d-flex flex-column align-center">
+        <v-typography class="white--text" style="font-size: 20px; color: white">
           Already have an account?
-        </Typography>
-        <Button variant="contained" href="/login" name="login" :style="{ width: '240px', mt: '2' }">
-          Login
-        </Button>
-        <Typography :style="{ color: 'white', mt: '2', fontSize: '20px' }">
+        </v-typography>
+        <v-btn color="#23532c" href="/login" class="my-2" style="width: 240px"> Login </v-btn>
+      </v-container>
+      <v-container class="d-flex flex-column align-center">
+        <v-typography class="white--text" style="font-size: 20px; color: white">
           Continue without signing in.
-        </Typography>
-        <Button variant="contained" href="/home" name="home" :style="{ width: '240px', mt: '2' }">
-          Home
-        </Button>
-      </template>
-    </Box>
-  </Container>
+        </v-typography>
+        <v-btn color="#23532c" href="/home" class="my-2" style="width: 240px"> Home </v-btn>
+      </v-container>
+    </v-col>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -64,7 +50,7 @@ const images = [
 
 export default defineComponent({
   setup() {
-    const authState = createAuthStore()
+    const authState = createAuthStore().authState
     const currentImageIndex = ref(0)
 
     const currentImage = computed(() => images[currentImageIndex.value])

@@ -1,21 +1,8 @@
-@tailwind base;
-@tailwind components;
-
-.theme-primary {
-  --tw-text-opacity: 1;
-  color: rgba(35, 83, 44, var(--tw-text-opacity));
-}
-.theme-secondary {
-  --tw-text-opacity: 1;
-  color: rgba(230, 218, 183, var(--tw-text-opacity));
-}
-.theme-background {
-  --tw-bg-opacity: 1;
-  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
-}
-.theme-info {
-  --tw-text-opacity: 1;
-  color: rgba(35, 83, 44, var(--tw-text-opacity));
+body {
+  margin: 0;
+  padding: 0;
 }
 
-@tailwind utilities;
+a {
+  text-decoration: none;
+}
