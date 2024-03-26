@@ -1,8 +1,10 @@
 <template>
   <v-app>
     <PageHeader />
-    <v-main>
-      <router-view />
+    <v-main class="d-flex align center justify-center" style="margin-top: 2vh; margin-bottom: 6vh">
+      <v-container fluid>
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
