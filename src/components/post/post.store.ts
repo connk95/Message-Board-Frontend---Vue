@@ -10,64 +10,64 @@ const initialState: PostState = {
 }
 
 const createPostStore = () => {
-  const state = reactive<PostState>({
+  const postState = reactive<PostState>({
     ...initialState
   })
 
   const actions = {
     async fetchPostsAction() {
-      state.loading = true
+      postState.loading = true
       try {
         const posts = await fetchPosts()
-        state.allPosts = posts
-        state.error = ''
+        postState.allPosts = posts
+        postState.error = ''
       } catch (error) {
         if (error instanceof Error) {
-          state.error = error.message
+          postState.error = error.message
         } else {
-          state.error = 'Could not load posts'
+          postState.error = 'Could not load posts'
         }
       } finally {
-        state.loading = false
+        postState.loading = false
       }
     },
 
     async fetchSinglePostAction(postId: string) {
-      state.loading = true
+      postState.loading = true
       try {
         const post = await fetchSinglePost(postId)
-        state.singlePost = post
-        state.error = ''
+        postState.singlePost = post
+        postState.error = ''
       } catch (error) {
         if (error instanceof Error) {
-          state.error = error.message
+          postState.error = error.message
         } else {
-          state.error = 'Could not load post'
+          postState.error = 'Could not load post'
         }
       } finally {
-        state.loading = false
+        postState.loading = false
       }
     },
 
     async createPostAction(newPostData: Post) {
-      state.loading = true
+      postState.loading = true
       try {
         await newPost(newPostData)
-        state.error = ''
+        postState.error = ''
       } catch (error) {
         if (error instanceof Error) {
-          state.error = error.message
+          postState.error = error.message
         } else {
-          state.error = 'Could not create post'
+          postState.error = 'Could not create post'
         }
       } finally {
-        state.loading = false
+        postState.loading = false
       }
     }
   }
 
   return {
-    state: readonly(state),
+    postState,
     actions
   }
 }

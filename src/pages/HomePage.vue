@@ -17,7 +17,12 @@
         </v-btn>
       </v-row>
       <!-- </v-col> -->
-      <v-progress-circular v-if="loading" indeterminate color="black"></v-progress-circular>
+      <v-progress-circular
+        v-if="loading"
+        indeterminate
+        color="black"
+        style="margin-left: 2vw; margin-top: 2vh"
+      ></v-progress-circular>
       <v-card
         v-else
         v-for="post in reversedPosts"
@@ -47,11 +52,11 @@ import createPostStore from '../components/post/post.store'
 export default {
   components: {},
   setup() {
-    const store = createPostStore()
+    const postStore = createPostStore()
     const router = useRouter()
 
     onMounted(() => {
-      store.actions.fetchPostsAction()
+      postStore.actions.fetchPostsAction()
     })
 
     const goToNewPostPage = () => {
@@ -59,12 +64,15 @@ export default {
     }
 
     const reversedPosts = computed(() => {
-      return Array.isArray(store.state.allPosts) ? store.state.allPosts.slice().reverse() : []
+      return Array.isArray(postStore.postState.allPosts)
+        ? postStore.postState.allPosts.slice().reverse()
+        : []
     })
+    const loading = computed(() => postStore.postState.loading)
 
     return {
       auth: { loggedInUser: { access_token: true } },
-      loading: store.state.loading,
+      loading,
       reversedPosts,
       goToNewPostPage
     }
