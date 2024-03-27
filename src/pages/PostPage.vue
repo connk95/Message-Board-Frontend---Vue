@@ -45,7 +45,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import createPostStore from '../components/post/post.store'
 
-export default {
+export default defineComponent({
   components: {},
   setup() {
     const postStore = createPostStore()
@@ -71,5 +71,5 @@ export default {
       reversedComments
     }
   }
-}
+})
 </script>

@@ -23,11 +23,11 @@ export default defineComponent({
     const router = useRouter()
 
     const goToLoginPage = () => {
-      router.push('/posts/login')
+      router.push('/login')
     }
 
     const goToSignUpPage = () => {
-      router.push('/posts/signup')
+      router.push('/signup')
     }
 
     return {

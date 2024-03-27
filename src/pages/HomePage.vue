@@ -1,7 +1,6 @@
 <template>
   <v-row justify="center">
     <v-col cols="8">
-      <!-- <v-col cols="1"> -->
       <v-row style="margin-left: 1.5vw">
         <v-typography style="margin-bottom: 2vh" class="text-h4"> All posts </v-typography>
       </v-row>
@@ -16,7 +15,6 @@
           New Post
         </v-btn>
       </v-row>
-      <!-- </v-col> -->
       <v-progress-circular
         v-if="loading"
         indeterminate
@@ -49,7 +47,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import createPostStore from '../components/post/post.store'
 
-export default {
+export default defineComponent({
   components: {},
   setup() {
     const postStore = createPostStore()
@@ -77,7 +75,7 @@ export default {
       goToNewPostPage
     }
   }
-}
+})
 </script>
 
 <style scoped>
