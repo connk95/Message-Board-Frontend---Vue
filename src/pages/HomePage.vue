@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed, onMounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import createPostStore from '../components/post/post.store'
 import createAuthStore from '../components/auth/auth.store'
@@ -54,6 +54,10 @@ export default defineComponent({
     const postStore = createPostStore()
     const authStore = createAuthStore()
     const router = useRouter()
+
+    onBeforeMount(() => {
+      authStore.actions.setLoggedInUserAction()
+    })
 
     onMounted(() => {
       postStore.actions.fetchPostsAction()
@@ -69,8 +73,6 @@ export default defineComponent({
         : []
     })
     const loading = computed(() => postStore.postState.loading)
-
-    console.log(authStore)
 
     return {
       authStore,

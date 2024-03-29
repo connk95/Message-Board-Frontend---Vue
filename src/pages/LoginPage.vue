@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed, onMounted, onUpdated } from 'vue'
 import { useRouter } from 'vue-router'
 import createAuthStore from '../components/auth/auth.store'
 // import SvgIcon from '@jamescoyle/vue-icon'
@@ -37,8 +37,11 @@ export default defineComponent({
     const validateLogin = () => {
       authStore.actions.userLoginAction({ username: username.value, password: password.value })
       router.push('/home')
-      console.log(authStore)
     }
+
+    onUpdated(() => {
+      authStore.actions.setLoggedInUserAction()
+    })
 
     return {
       username,

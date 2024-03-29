@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onBeforeMount } from 'vue'
 import PageHeader from './pages/PageHeader.vue'
 import createAuthStore from './components/auth/auth.store'
 
@@ -22,7 +22,7 @@ export default defineComponent({
   setup() {
     const authStore = createAuthStore()
 
-    onMounted(() => {
+    onBeforeMount(() => {
       authStore.actions.setLoggedInUserAction()
     })
 
