@@ -6,7 +6,7 @@
       </v-row>
       <v-row style="margin-left: 1.5vw">
         <v-btn
-          v-if="auth.loggedInUser.access_token"
+          v-if="authStore.loggedInUser"
           @click="goToNewPostPage"
           color="#23532c"
           style="margin-bottom: 2vh; text-transform: unset"
@@ -46,11 +46,13 @@
 import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import createPostStore from '../components/post/post.store'
+import createAuthStore from '../components/auth/auth.store'
 
 export default defineComponent({
   components: {},
   setup() {
     const postStore = createPostStore()
+    const authStore = createAuthStore()
     const router = useRouter()
 
     onMounted(() => {
@@ -68,8 +70,10 @@ export default defineComponent({
     })
     const loading = computed(() => postStore.postState.loading)
 
+    console.log(authStore)
+
     return {
-      auth: { loggedInUser: { access_token: true } },
+      authStore,
       loading,
       reversedPosts,
       goToNewPostPage

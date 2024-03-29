@@ -10,13 +10,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import PageHeader from './pages/PageHeader.vue'
+import createAuthStore from './components/auth/auth.store'
 
 export default defineComponent({
   name: 'App',
   components: {
     PageHeader
+  },
+  setup() {
+    const authStore = createAuthStore()
+
+    onMounted(() => {
+      authStore.actions.setLoggedInUserAction()
+    })
+
+    return {}
   }
 })
 </script>

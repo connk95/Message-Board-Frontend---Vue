@@ -5,21 +5,26 @@
       <v-icon color="white" icon="mdi-message" size="25"></v-icon>
     </div>
     <v-spacer></v-spacer>
-    <v-btn style="text-transform: unset" class="text-body-1" @click="goToLoginPage">Login</v-btn>
-    <v-btn style="text-transform: unset" class="text-body-1" @click="goToSignUpPage"
-      >Create Account</v-btn
-    >
+    <div v-if="authStore.authState.loggedInUser">
+      <v-typography>Welcome {{ authStore.authState.loggedInUser.username }}!</v-typography>
+    </div>
+    <div v-else>
+      <v-btn style="text-transform: unset" class="text-body-1" @click="goToLoginPage">Login</v-btn>
+      <v-btn style="text-transform: unset" class="text-body-1" @click="goToSignUpPage"
+        >Create Account</v-btn
+      >
+    </div>
   </v-app-bar>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import createAuthStore from '../components/auth/auth.store'
 
 export default defineComponent({
   setup() {
-    const authStore = createAuthStore().authState
+    const authStore = createAuthStore()
     const router = useRouter()
 
     const goToLoginPage = () => {
@@ -29,6 +34,15 @@ export default defineComponent({
     const goToSignUpPage = () => {
       router.push('/signup')
     }
+
+    watch(
+      () => authStore.authState.loggedInUser,
+      () => {
+        forceUpdate.value++
+      }
+    )
+
+    const forceUpdate = ref(0)
 
     return {
       authStore,

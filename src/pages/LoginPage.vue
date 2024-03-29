@@ -37,6 +37,7 @@ export default defineComponent({
     const validateLogin = () => {
       authStore.actions.userLoginAction({ username: username.value, password: password.value })
       router.push('/home')
+      console.log(authStore)
     }
 
     return {
