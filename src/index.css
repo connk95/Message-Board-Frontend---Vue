@@ -10,3 +10,7 @@ a {
 router-link {
   text-decoration: none;
 }
+
+/* v-container {
+  padding: 0;
+} */

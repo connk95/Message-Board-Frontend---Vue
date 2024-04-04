@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" direction="column" style="margin-top: 12vh">
     <v-col cols="8">
       <v-progress-circular
         v-if="loading"
@@ -17,7 +17,10 @@
           </v-card-text>
           <v-card-text class="text-body-2 pt-0"> by {{ singlePost.user.username }} </v-card-text>
         </v-card>
-        <v-typography style="margin-bottom: 10px; margin-left: 20px"
+        <v-typography v-if="commentNumber == 0" style="margin-bottom: 10px; margin-left: 20px"
+          >Be the first to leave a comment!</v-typography
+        >
+        <v-typography v-else style="margin-bottom: 10px; margin-left: 20px"
           >Comments: {{ reversedComments.length }}</v-typography
         >
         <v-card
@@ -34,6 +37,12 @@
           </v-card-text>
           <v-card-text class="text-body-2 pt-0"> by {{ comment.user.username }} </v-card-text>
         </v-card>
+        <v-text-field
+          v-if="user"
+          v-model="comment"
+          label="Comment"
+          style="width: 60vw; margin-left: 20px; margin-right: 20px; margin-top: 10px"
+        ></v-text-field>
       </v-row>
       <v-alert v-else type="error">Post not found</v-alert>
     </v-col>
@@ -41,22 +50,29 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed, onMounted, onBeforeMount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import createPostStore from '../components/post/post.store'
+import createAuthStore from '../components/auth/auth.store'
 
 export default defineComponent({
   components: {},
   setup() {
     const postStore = createPostStore()
+    const authStore = createAuthStore()
     const router = useRouter()
     const route = useRoute()
     const id = route.params.id
+
+    onBeforeMount(() => {
+      authStore.actions.setLoggedInUserAction()
+    })
 
     onMounted(() => {
       postStore.actions.fetchSinglePostAction(id)
     })
 
+    const user = computed(() => authStore.authState.loggedInUser)
     const singlePost = computed(() => postStore.postState.singlePost)
     const loading = computed(() => postStore.postState.loading)
     const reversedComments = computed(() => {
@@ -64,11 +80,16 @@ export default defineComponent({
         ? singlePost.value.comments.slice().reverse()
         : []
     })
+    const commentNumber = computed(() => {
+      return singlePost.value.comments.length
+    })
 
     return {
       singlePost,
       loading,
-      reversedComments
+      user,
+      reversedComments,
+      commentNumber
     }
   }
 })

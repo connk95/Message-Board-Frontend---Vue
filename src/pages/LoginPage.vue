@@ -1,6 +1,6 @@
 <template>
   <!-- <svg-icon type="mdi" :path="path"></svg-icon> -->
-  <v-sheet class="mx-auto" width="30vw" align="center" style="margin-top: 8vh">
+  <v-sheet class="mx-auto" width="30vw" align="center" style="margin-top: 12vh">
     <v-typography class="text-h5">Sign In</v-typography>
     <v-form ref="form" style="margin-top: 4vh">
       <v-text-field v-model="username" label="Username*" required></v-text-field>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted, onUpdated } from 'vue'
+import { defineComponent, ref, computed, onMounted, onUpdated, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import createAuthStore from '../components/auth/auth.store'
 // import SvgIcon from '@jamescoyle/vue-icon'
@@ -39,9 +39,9 @@ export default defineComponent({
       router.push('/home')
     }
 
-    onUpdated(() => {
-      authStore.actions.setLoggedInUserAction()
-    })
+    // onUpdated(() => {
+    //   authStore.actions.setLoggedInUserAction()
+    // })
 
     return {
       username,

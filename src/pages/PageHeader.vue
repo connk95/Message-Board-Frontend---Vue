@@ -1,17 +1,34 @@
 <template>
   <v-app-bar color="#23532c">
     <div class="d-flex align-center" style="margin-left: 2vw">
-      <v-app-bar-title>ChatBox</v-app-bar-title>
+      <link />
+      <v-btn variant="plain" style="opacity: 1" @click="redirectHome">
+        <v-app-bar-title>ChatBox</v-app-bar-title>
+      </v-btn>
       <v-icon color="white" icon="mdi-message" size="25"></v-icon>
     </div>
     <v-spacer></v-spacer>
     <div v-if="authStore.authState.loggedInUser" style="margin-right: 3vw">
       <v-typography>Welcome {{ authStore.authState.loggedInUser?.user.username }}!</v-typography>
-      <v-btn style="text-transform: unset" class="text-body-1" @click="userLogout">Logout</v-btn>
+      <v-icon :icon="`mdiSvg:${mdiAccount}`"></v-icon>
+      <v-btn
+        style="text-transform: unset; margin-bottom: 3px"
+        class="text-body-1"
+        @click="userLogout"
+        >Logout</v-btn
+      >
     </div>
     <div v-else style="margin-right: 1vw">
-      <v-btn style="text-transform: unset" class="text-body-1" @click="goToLoginPage">Login</v-btn>
-      <v-btn style="text-transform: unset" class="text-body-1" @click="goToSignUpPage"
+      <v-btn
+        style="text-transform: unset; margin-bottom: 3px"
+        class="text-body-1"
+        @click="goToLoginPage"
+        >Login</v-btn
+      >
+      <v-btn
+        style="text-transform: unset; margin-bottom: 3px"
+        class="text-body-1"
+        @click="goToSignUpPage"
         >Create Account</v-btn
       >
     </div>
@@ -37,6 +54,10 @@ export default defineComponent({
       router.push('/signup')
     }
 
+    const redirectHome = () => {
+      router.push('/home')
+    }
+
     onBeforeMount(() => {
       authStore.actions.setLoggedInUserAction()
     })
@@ -47,13 +68,14 @@ export default defineComponent({
           username: authStore.authState.loggedInUser.user.username,
           password: authStore.authState.loggedInUser.user.password
         })
-      router.push('/home')
+      router.push('/')
     }
 
     return {
       authStore,
       goToLoginPage,
       goToSignUpPage,
+      redirectHome,
       userLogout
     }
   }

@@ -1,12 +1,12 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" style="margin-top: 12vh">
     <v-col cols="8">
       <v-row style="margin-left: 1.5vw">
         <v-typography style="margin-bottom: 2vh" class="text-h4"> All posts </v-typography>
       </v-row>
       <v-row style="margin-left: 1.5vw">
         <v-btn
-          v-if="authStore.loggedInUser"
+          v-if="user"
           @click="goToNewPostPage"
           color="#23532c"
           style="margin-bottom: 2vh; text-transform: unset"
@@ -55,12 +55,15 @@ export default defineComponent({
     const authStore = createAuthStore()
     const router = useRouter()
 
+    console.log(authStore)
+
     onBeforeMount(() => {
       authStore.actions.setLoggedInUserAction()
     })
 
     onMounted(() => {
       postStore.actions.fetchPostsAction()
+      console.log(authStore)
     })
 
     const goToNewPostPage = () => {
@@ -74,9 +77,12 @@ export default defineComponent({
     })
     const loading = computed(() => postStore.postState.loading)
 
+    const user = computed(() => authStore.authState.loggedInUser)
+
     return {
       authStore,
       loading,
+      user,
       reversedPosts,
       goToNewPostPage
     }
@@ -84,6 +90,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-/* Add your custom styles here */
-</style>
+<style scoped></style>

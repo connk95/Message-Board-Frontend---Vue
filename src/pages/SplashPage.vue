@@ -2,7 +2,7 @@
   <v-container
     fluid
     class="d-flex flex-row"
-    style="height: 92vh; background-color: #a5bf7c; margin: 0; padding: 0"
+    style="height: 100%; background-color: #a5bf7c; margin: 0; padding: 0"
   >
     <v-img :src="currentImage" width="65vw"></v-img>
     <v-col cols="12" md="4" class="d-flex flex-column align-center justify-center">

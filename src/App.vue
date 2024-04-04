@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <PageHeader />
-    <v-main class="d-flex align center justify-center" style="margin-top: 2vh; margin-bottom: 6vh">
-      <v-container fluid>
-        <router-view />
-      </v-container>
+    <v-main class="d-flex align center justify-center" style="padding: 0; margin: 0">
+      <!-- <v-container fluid sty> -->
+      <PageHeader />
+      <router-view />
+      <!-- </v-container> -->
     </v-main>
   </v-app>
 </template>
@@ -13,6 +13,7 @@
 import { defineComponent, onBeforeMount } from 'vue'
 import PageHeader from './pages/PageHeader.vue'
 import createAuthStore from './components/auth/auth.store'
+import { onUpdated } from 'vue'
 
 export default defineComponent({
   name: 'App',
@@ -22,9 +23,9 @@ export default defineComponent({
   setup() {
     const authStore = createAuthStore()
 
-    onBeforeMount(() => {
-      authStore.actions.setLoggedInUserAction()
-    })
+    // onBeforeMount(() => {
+    //   authStore.actions.setLoggedInUserAction()
+    // })
 
     return {}
   }
