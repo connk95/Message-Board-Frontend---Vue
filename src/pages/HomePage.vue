@@ -1,41 +1,32 @@
 <template>
-  <v-container>
-    <v-row
-      justify="center"
-      direction="column"
-      class="align-center"
-      style="margin-top: 12vh; width: 100vh"
-    >
-      <v-col cols="8">
-        <v-row style="margin-left: 1.5vw" direction="column" class="align-start">
-          <v-typography style="margin-bottom: 2vh" class="text-h4"> All posts </v-typography>
-          <!-- </v-row> -->
-          <!-- <v-row style="margin-left: 1.5vw"> -->
-        </v-row>
-        <v-row style="margin-left: 1.5vw" direction="column" class="align-start">
-          <v-btn
-            v-if="user"
-            @click="goToNewPostPage"
-            color="#23532c"
-            style="width: 6rem; margin-bottom: 2vh; text-transform: unset"
-            class="text-body-1"
-          >
-            New Post
-          </v-btn>
-        </v-row>
-        <v-progress-circular
-          v-if="loading"
-          indeterminate
-          color="black"
-          style="margin-left: 2vw; margin-top: 2vh"
-        ></v-progress-circular>
+  <v-container fluid class="d-flex flex-column align-center w-100">
+    <v-row no-gutters class="align-center mt-6 w-100" width="unset" style="max-width: 900px">
+      <v-col cols="12" class="justify-center mt-16 w-100">
+        <v-typography class="text-h4"> All posts </v-typography>
+      </v-col>
+    </v-row>
+    <v-row no-gutters class="align-center mt-4 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100 mb-2">
+        <v-btn
+          v-if="user"
+          @click="goToNewPostPage"
+          color="#23532c"
+          style="width: 6rem; text-transform: unset"
+          class="text-body-1"
+        >
+          New Post
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row no-gutters class="align-center mt-4 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100">
+        <v-progress-circular v-if="loading" indeterminate color="black"></v-progress-circular>
         <v-card
           v-else
           v-for="post in reversedPosts"
           :key="post._id"
-          style="margin: 20px; width: 60vw"
           elevation="2"
-          class="pb-2 pt-2"
+          class="pa-2 mb-2 w-100"
         >
           <router-link :to="`/posts/${post._id}`" style="text-decoration: none; color: inherit">
             <v-card-title class="text-h6 pb-0">{{ post.title }}</v-card-title>

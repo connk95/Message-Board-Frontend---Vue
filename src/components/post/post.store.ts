@@ -1,6 +1,7 @@
 import { reactive, readonly } from 'vue'
 import type { PostState, Post } from './post.type'
-import { fetchPosts, fetchSinglePost, newPost } from './post.actions'
+import type { Comment } from './comment.type'
+import { fetchPosts, fetchSinglePost, newPost, newComment } from './post.actions'
 
 const initialState: PostState = {
   allPosts: [],
@@ -62,6 +63,16 @@ const createPostStore = () => {
         }
       } finally {
         postState.loading = false
+      }
+    }
+
+    async newCommentAction(commentData: Comment) {
+      post.state.loading = true
+      try {
+        await newComment(commentData)
+        postState.error = ''
+      } catch (error) {
+        console.log(error)
       }
     }
   }

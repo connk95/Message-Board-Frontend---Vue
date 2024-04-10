@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="d-flex align center justify-center" style="padding: 0; margin: 0">
+    <v-main fluid class="d-flex flex-column align-center" style="padding: 0; margin: 0">
       <!-- <v-container fluid sty> -->
       <PageHeader />
       <router-view />

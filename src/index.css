@@ -11,6 +11,10 @@ router-link {
   text-decoration: none;
 }
 
+.v-row {
+  margin: 0;
+}
+
 /* v-container {
   padding: 0;
 } */

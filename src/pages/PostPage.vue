@@ -1,14 +1,14 @@
 <template>
-  <v-container>
-    <v-row class="align-center mt-14">
-      <v-col cols="8">
+  <v-container fluid class="d-flex flex-column align-center w-100">
+    <v-row no-gutters class="align-center mt-6 w-100" width="unset" style="max-width: 900px">
+      <v-col cols="12" class="justify-center mt-16 w-100">
         <v-progress-circular
           v-if="loading"
           indeterminate
           color="black"
           style="margin-left: 2vw; margin-top: 2vh; width: 60vw"
         ></v-progress-circular>
-        <v-card v-else-if="singlePost" style="width: 60vw" elevation="2" class="pa-2 w-60">
+        <v-card v-else-if="singlePost" elevation="2" class="pa-2 w-100">
           <v-card-title class="text-h6 pb-0">{{ singlePost.title }}</v-card-title>
           <v-card-text class="text-body-1 pb-0">{{ singlePost.text }}</v-card-text>
           <v-card-text class="text-body-2 pb-0 pt-1">
@@ -20,18 +20,16 @@
         <v-typograpgy v-else type="error">Post not found</v-typograpgy>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        <v-typography v-if="comments.length == 0" style="margin-bottom: 10px; margin-left: 20px"
+    <v-row no-gutters class="align-center mt-4 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100">
+        <v-typography v-if="reversedComments.length == 0"
           >Be the first to leave a comment!</v-typography
         >
-        <v-typography v-else style="margin-bottom: 10px; margin-left: 20px"
-          >Comments: {{ reversedComments.length }}</v-typography
-        >
+        <v-typography v-else>Comments: {{ reversedComments.length }}</v-typography>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
+    <v-row no-gutters class="align-center mt-2 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100">
         <v-card
           v-for="comment in reversedComments"
           :key="comment._id"
@@ -49,27 +47,24 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        <v-text-field
-          v-if="user"
-          v-model="comment"
-          label="Comment"
-          style="width: 60vw; margin-left: 20px; margin-right: 20px; margin-top: 10px"
-        ></v-text-field>
+    <v-row no-gutters class="align-center mt-2 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100">
+        <v-text-field v-if="user" v-model="comment" label="Comment"></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
+    <v-row no-gutters class="align-center mt-2 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100">
         <v-btn
+          @click="submitComment"
           color="#23532c"
-          style="width: 6rem; margin-bottom: 2vh; text-transform: unset"
-          class="text-body-1"
+          style="width: 6rem; text-transform: unset"
+          class="text-body-1 mr-4"
           >Submit</v-btn
         >
         <v-btn
+          @click="goBack"
           color="#23532c"
-          style="width: 6rem; margin-bottom: 2vh; text-transform: unset"
+          style="width: 6rem; text-transform: unset"
           class="text-body-1"
           >Back</v-btn
         >
@@ -95,22 +90,26 @@ export default defineComponent({
 
     onBeforeMount(() => {
       authStore.actions.setLoggedInUserAction()
-    })
-
-    onMounted(() => {
       postStore.actions.fetchSinglePostAction(id)
     })
+
+    const goBack = () => {
+      router.push('/home')
+    }
+
+    const submitComment = () => {
+      location.reload()
+    }
 
     const user = computed(() => authStore.authState.loggedInUser)
     const singlePost = computed(() => postStore.postState.singlePost)
     const loading = computed(() => postStore.postState.loading)
     const reversedComments = computed(() => {
-      return Array.isArray(singlePost.value.comments)
-        ? singlePost.value.comments.slice().reverse()
-        : []
-    })
-    const comments = computed(() => {
-      return singlePost.value.comments
+      if (singlePost.value && Array.isArray(singlePost.value.comments)) {
+        return singlePost.value.comments.slice().reverse()
+      } else {
+        return []
+      }
     })
 
     return {
@@ -118,7 +117,8 @@ export default defineComponent({
       loading,
       user,
       reversedComments,
-      comments
+      goBack,
+      submitComment
     }
   }
 })
