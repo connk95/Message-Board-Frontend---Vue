@@ -64,7 +64,7 @@ const createPostStore = () => {
       } finally {
         postState.loading = false
       }
-    }
+    },
 
     async newCommentAction(commentData: Comment) {
       post.state.loading = true
@@ -72,7 +72,13 @@ const createPostStore = () => {
         await newComment(commentData)
         postState.error = ''
       } catch (error) {
-        console.log(error)
+        if (error instanceof Error) {
+          postState.error = error.message
+        } else {
+          postState.error = 'Could not submit comment'
+        }
+      } finally {
+        postState.loading = false
       }
     }
   }

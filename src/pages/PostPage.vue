@@ -98,6 +98,11 @@ export default defineComponent({
     }
 
     const submitComment = () => {
+      postStore.actions.newCommentAction({
+        text: comment.value,
+        postId: id,
+        user: authStore.loggedInUser
+      })
       location.reload()
     }
 
