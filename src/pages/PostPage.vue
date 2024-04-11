@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="d-flex flex-column align-center w-100">
+  <v-container fluid class="d-flex flex-column align-center w-100 mb-10">
     <v-row no-gutters class="align-center mt-6 w-100" width="unset" style="max-width: 900px">
       <v-col cols="12" class="justify-center mt-16 w-100">
         <v-progress-circular
@@ -33,9 +33,8 @@
         <v-card
           v-for="comment in reversedComments"
           :key="comment._id"
-          style="margin-left: 20px; margin-right: 20px; margin-top: 10px; width: 60vw"
           elevation="2"
-          class="pb-2 pt-2"
+          class="pb-2 pt-2 mt-1 mb-2"
         >
           <v-card-title class="text-h6 pb-0">{{ comment.title }}</v-card-title>
           <v-card-text class="text-body-1 pb-0">{{ comment.text }}</v-card-text>
@@ -70,6 +69,11 @@
         >
       </v-col>
     </v-row>
+    <v-row v-if="error" class="align-center mt-2 w-100" style="max-width: 900px">
+      <v-col cols="12" class="justify-center w-100">
+        <v-typography>{{ error }}</v-typography>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -87,6 +91,8 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const id = route.params.id
+    const comment = ref('')
+    const error = ref('')
 
     onBeforeMount(() => {
       authStore.actions.setLoggedInUserAction()
@@ -98,12 +104,21 @@ export default defineComponent({
     }
 
     const submitComment = () => {
-      postStore.actions.newCommentAction({
-        text: comment.value,
-        postId: id,
-        user: authStore.loggedInUser
-      })
-      location.reload()
+      if (comment.value) {
+        postStore.actions
+          .newCommentAction({
+            text: comment.value,
+            postId: id,
+            user: authStore.authState.loggedInUser.user._id
+          })
+          .then(() => {
+            comment.value = ''
+            window.location.reload()
+          })
+          .catch((error) => {
+            return error
+          })
+      }
     }
 
     const user = computed(() => authStore.authState.loggedInUser)
@@ -123,7 +138,9 @@ export default defineComponent({
       user,
       reversedComments,
       goBack,
-      submitComment
+      submitComment,
+      comment,
+      error
     }
   }
 })

@@ -67,7 +67,7 @@ const createPostStore = () => {
     },
 
     async newCommentAction(commentData: Comment) {
-      post.state.loading = true
+      postState.loading = true
       try {
         await newComment(commentData)
         postState.error = ''
