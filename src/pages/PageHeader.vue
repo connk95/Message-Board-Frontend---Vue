@@ -9,8 +9,12 @@
     </div>
     <v-spacer></v-spacer>
     <div v-if="authStore.authState.loggedInUser" style="margin-right: 3vw">
-      <v-typography>Welcome {{ authStore.authState.loggedInUser?.user.username }}!</v-typography>
-      <v-icon :icon="`mdiSvg:${mdiAccount}`"></v-icon>
+      <v-typography class="mr-4"
+        >Welcome {{ authStore.authState.loggedInUser?.user.username }}!</v-typography
+      >
+      <v-btn style="text-transform: unset; margin-bottom: 3px" class="text-body-1" @click="userPage"
+        >Profile</v-btn
+      >
       <v-btn
         style="text-transform: unset; margin-bottom: 3px"
         class="text-body-1"
@@ -71,12 +75,17 @@ export default defineComponent({
       router.push('/')
     }
 
+    const userPage = () => {
+      router.push('/profile')
+    }
+
     return {
       authStore,
       goToLoginPage,
       goToSignUpPage,
       redirectHome,
-      userLogout
+      userLogout,
+      userPage
     }
   }
 })
