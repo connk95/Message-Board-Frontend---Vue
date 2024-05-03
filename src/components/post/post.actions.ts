@@ -29,7 +29,7 @@ export const newPost = ({ title, text }: Post): Promise<any> => {
   })
 }
 
-export const newComment = ({ text, postId, user }: Comment): Promise<any> => {
+export const newComment = ({ postId, text, user }: Comment): Promise<any> => {
   return axios
     .patch(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
       postId,

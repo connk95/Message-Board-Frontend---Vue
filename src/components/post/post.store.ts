@@ -10,7 +10,19 @@ const initialState: PostState = {
   loading: false
 }
 
-const createPostStore = () => {
+interface PostActions {
+  fetchPostsAction: () => Promise<void>
+  fetchSinglePostAction: (postId: string) => Promise<void>
+  createPostAction: (newPostData: Post) => Promise<void>
+  newCommentAction: (commentData: Comment) => Promise<void>
+}
+
+export interface PostStoreType {
+  postState: PostState
+  actions: PostActions
+}
+
+const createPostStore = (): { postState: PostState; actions: PostActions } => {
   const postState = reactive<PostState>({
     ...initialState
   })
@@ -67,6 +79,7 @@ const createPostStore = () => {
     },
 
     async newCommentAction(commentData: Comment) {
+      console.log('commentData', commentData)
       postState.loading = true
       try {
         await newComment(commentData)

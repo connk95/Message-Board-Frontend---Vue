@@ -32,7 +32,7 @@
             <v-card-title class="text-h6 pb-0">{{ post.title }}</v-card-title>
             <v-card-text class="text-body-1 pb-0">{{ post.text }}</v-card-text>
             <v-card-text class="text-body-2 pb-0 pt-1">
-              posted at {{ post.createdAt.slice(11, 16) }} on {{ post.createdAt.slice(0, 10) }}
+              posted at {{ post.createdAt?.slice(11, 16) }} on {{ post.createdAt?.slice(0, 10) }}
             </v-card-text>
             <v-card-text class="text-body-2 pt-0"> by {{ post.user.username }} </v-card-text>
           </router-link>
@@ -42,7 +42,7 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, computed, onMounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import createPostStore from '../components/post/post.store'
@@ -55,15 +55,12 @@ export default defineComponent({
     const authStore = createAuthStore()
     const router = useRouter()
 
-    console.log(authStore)
-
     onBeforeMount(() => {
       authStore.actions.setLoggedInUserAction()
     })
 
     onMounted(() => {
       postStore.actions.fetchPostsAction()
-      console.log(authStore)
     })
 
     const goToNewPostPage = () => {

@@ -9,6 +9,18 @@ const initialState: AuthState = {
   loading: false
 }
 
+interface AuthActions {
+  userLoginAction: () => Promise<void>
+  userLogoutAction: () => Promise<void>
+  createUserAction: () => Promise<void>
+  setLoggedInUserAction: () => Promise<void>
+}
+
+export interface AuthStoreType {
+  authState: AuthState
+  actions: AuthActions
+}
+
 function isLoggedInUser(object: LoggedInUser | null | undefined): object is LoggedInUser {
   return (object as LoggedInUser).access_token !== undefined
 }
