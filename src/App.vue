@@ -23,9 +23,9 @@ export default defineComponent({
   setup() {
     const authStore = createAuthStore()
 
-    // onBeforeMount(() => {
-    //   authStore.actions.setLoggedInUserAction()
-    // })
+    onBeforeMount(() => {
+      authStore.actions.setLoggedInUserAction()
+    })
 
     return {}
   }

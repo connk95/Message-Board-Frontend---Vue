@@ -32,7 +32,7 @@ export const setLoggedInUser = (): Promise<LoggedInUser | undefined> => {
 export const userLogout = ({ username, password }: UserLoginData): Promise<any> => {
   localStorage.removeItem('loggedInUser')
   return axios
-    .post(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+    .post(`${import.meta.env.VITE_API_URL}/auth/userLogout`, {
       username,
       password
     })

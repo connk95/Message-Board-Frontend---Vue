@@ -6,13 +6,13 @@ import UserPage from '../pages/UserPage.vue'
 import SplashPage from '../pages/SplashPage.vue'
 import SignUpPage from '../pages/SignUpPage.vue'
 import LoginPage from '../pages/LoginPage.vue'
-import NewPostPage from '../pages/NewPost.vue'
+import NewPost from '../pages/NewPost.vue'
 
 const routes: RouteRecordRaw[] = [
   { path: '/', component: SplashPage },
   { path: '/home', component: HomePage },
   { path: '/posts/:id', component: PostPage },
-  { path: '/posts/new', component: NewPostPage },
+  { path: '/posts/new', component: NewPost },
   { path: '/signup', component: SignUpPage },
   { path: '/login', component: LoginPage },
   { path: '/profile', component: UserPage }

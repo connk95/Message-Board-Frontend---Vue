@@ -36,9 +36,9 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue'
-import createAuthStore from '../components/auth/auth.store'
+<script setup lang="ts">
+import { ref, computed, onMounted, inject } from 'vue'
+import type { AuthState } from '@/components/auth/auth.type'
 
 const images = [
   '../../custom_assets/Collab-pana.svg',
@@ -48,26 +48,17 @@ const images = [
   '../../custom_assets/Solidarity-pana.svg'
 ]
 
-export default defineComponent({
-  setup() {
-    const authState = createAuthStore().authState
-    const currentImageIndex = ref(0)
+const authState = inject<AuthState>('authState')
+const currentImageIndex = ref(0)
 
-    const currentImage = computed(() => images[currentImageIndex.value])
+const currentImage = computed(() => images[currentImageIndex.value])
 
-    const changeImage = () => {
-      const randomNumber = Math.floor(Math.random() * images.length)
-      currentImageIndex.value = randomNumber
-    }
+const changeImage = () => {
+  const randomNumber = Math.floor(Math.random() * images.length)
+  currentImageIndex.value = randomNumber
+}
 
-    onMounted(() => changeImage())
-
-    return {
-      authState,
-      currentImage
-    }
-  }
-})
+onMounted(() => changeImage())
 </script>
 
 <style scoped></style>

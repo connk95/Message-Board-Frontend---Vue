@@ -7,23 +7,28 @@
     </v-row>
     <v-row no-gutters class="align-center mt-4 w-100" style="max-width: 900px">
       <v-col cols="12" class="justify-center w-100 mb-2">
-        <v-btn
-          v-if="user"
-          @click="goToNewPostPage"
-          color="#23532c"
-          style="width: 6rem; text-transform: unset"
-          class="text-body-1"
-        >
-          New Post
-        </v-btn>
+        <router-link :to="'/posts/new'" style="text-decoration: none; color: inherit">
+          <v-btn
+            v-if="authState?.loggedInUser?.user"
+            color="#23532c"
+            style="width: 6rem; text-transform: unset"
+            class="text-body-1"
+          >
+            New Post
+          </v-btn>
+        </router-link>
       </v-col>
     </v-row>
     <v-row no-gutters class="align-center mt-4 w-100" style="max-width: 900px">
       <v-col cols="12" class="justify-center w-100">
-        <v-progress-circular v-if="loading" indeterminate color="black"></v-progress-circular>
+        <v-progress-circular
+          v-if="postState?.loading"
+          indeterminate
+          color="black"
+        ></v-progress-circular>
         <v-card
           v-else
-          v-for="post in reversedPosts"
+          v-for="post in postState?.allPosts.slice().reverse()"
           :key="post._id"
           elevation="2"
           class="pa-2 mb-2 w-100"
@@ -42,48 +47,23 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed, onMounted, onBeforeMount } from 'vue'
+<script setup lang="ts">
+import { onMounted, onBeforeMount, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import createPostStore from '../components/post/post.store'
-import createAuthStore from '../components/auth/auth.store'
+// import createPostStore from '../components/post/post.store'
+// import createAuthStore from '../components/auth/auth.store'
+import type { PostState } from '@/components/post/post.type'
+import type { AuthState } from '@/components/auth/auth.type'
+import type { PostStoreType } from '../components/post/post.store'
+import type { AuthStoreType } from '../components/auth/auth.store'
 
-export default defineComponent({
-  components: {},
-  setup() {
-    const postStore = createPostStore()
-    const authStore = createAuthStore()
-    const router = useRouter()
+const authState = inject<AuthState>('authState')
+const authStore = inject<AuthStoreType>('authStore')!
+const postState = inject<PostState>('postState')
+const postStore = inject<PostStoreType>('postStore')!
 
-    onBeforeMount(() => {
-      authStore.actions.setLoggedInUserAction()
-    })
-
-    onMounted(() => {
-      postStore.actions.fetchPostsAction()
-    })
-
-    const goToNewPostPage = () => {
-      router.push('/posts/new')
-    }
-
-    const reversedPosts = computed(() => {
-      return Array.isArray(postStore.postState.allPosts)
-        ? postStore.postState.allPosts.slice().reverse()
-        : []
-    })
-    const loading = computed(() => postStore.postState.loading)
-
-    const user = computed(() => authStore.authState.loggedInUser)
-
-    return {
-      authStore,
-      loading,
-      user,
-      reversedPosts,
-      goToNewPostPage
-    }
-  }
+onMounted(() => {
+  postStore.actions.fetchPostsAction()
 })
 </script>
 

@@ -86,7 +86,6 @@ import type { AuthState } from '@/components/auth/auth.type'
 import type { PostState } from '@/components/post/post.type'
 import { useRouter, useRoute } from 'vue-router'
 import type { PostStoreType } from '../components/post/post.store'
-import type { User } from '@/components/user/user.type'
 import type { AuthStoreType } from '../components/auth/auth.store'
 
 const authState = inject<AuthState>('authState')
@@ -97,7 +96,7 @@ const route = useRoute()
 const id = route.params.id as string
 
 onBeforeMount(() => {
-  authStore.actions.setLoggedInUserAction()
+  // authStore.actions.setLoggedInUserAction()
   postStore.actions.fetchSinglePostAction(id)
 })
 

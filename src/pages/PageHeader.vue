@@ -2,9 +2,11 @@
   <v-app-bar color="#23532c">
     <div class="d-flex align-center" style="margin-left: 2vw">
       <link />
-      <v-btn variant="plain" style="opacity: 1" @click="redirectHome">
-        <v-app-bar-title>ChatBox</v-app-bar-title>
-      </v-btn>
+      <router-link :to="'/home'" style="text-decoration: none; color: inherit">
+        <v-btn variant="plain" style="opacity: 1">
+          <v-app-bar-title>ChatBox</v-app-bar-title>
+        </v-btn>
+      </router-link>
       <v-icon color="white" icon="mdi-message" size="25"></v-icon>
     </div>
     <v-spacer></v-spacer>
@@ -12,9 +14,9 @@
       <v-typography class="mr-4"
         >Welcome {{ authStore.authState.loggedInUser?.user.username }}!</v-typography
       >
-      <v-btn style="text-transform: unset; margin-bottom: 3px" class="text-body-1" @click="userPage"
-        >Profile</v-btn
-      >
+      <router-link :to="'/profile'" style="text-decoration: none; color: inherit">
+        <v-btn style="text-transform: unset; margin-bottom: 3px" class="text-body-1">Profile</v-btn>
+      </router-link>
       <v-btn
         style="text-transform: unset; margin-bottom: 3px"
         class="text-body-1"
@@ -23,72 +25,40 @@
       >
     </div>
     <div v-else style="margin-right: 1vw">
-      <v-btn
-        style="text-transform: unset; margin-bottom: 3px"
-        class="text-body-1"
-        @click="goToLoginPage"
-        >Login</v-btn
-      >
-      <v-btn
-        style="text-transform: unset; margin-bottom: 3px"
-        class="text-body-1"
-        @click="goToSignUpPage"
-        >Create Account</v-btn
-      >
+      <router-link :to="'/login'" style="text-decoration: none; color: inherit">
+        <v-btn style="text-transform: unset; margin-bottom: 3px" class="text-body-1">Login</v-btn>
+      </router-link>
+      <router-link :to="'/signup'" style="text-decoration: none; color: inherit">
+        <v-btn style="text-transform: unset; margin-bottom: 3px" class="text-body-1"
+          >Create Account</v-btn
+        >
+      </router-link>
     </div>
   </v-app-bar>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+<script setup lang="ts">
+import { inject } from 'vue'
 import { useRouter } from 'vue-router'
-import createAuthStore from '../components/auth/auth.store'
-import { onBeforeMount } from 'vue'
+// import createAuthStore from '../components/auth/auth.store'
+// import { onBeforeMount } from 'vue'
+import type { AuthState } from '@/components/auth/auth.type'
+import type { AuthStoreType } from '../components/auth/auth.store'
 
-export default defineComponent({
-  setup() {
-    const authStore = createAuthStore()
-    const router = useRouter()
+const authState = inject<AuthState>('authState')
+const authStore = inject<AuthStoreType>('authStore')!
+const router = useRouter()
 
-    const goToLoginPage = () => {
-      router.push('/login')
-    }
+// onBeforeMount(() => {
+//   authStore.actions.setLoggedInUserAction()
+// })
 
-    const goToSignUpPage = () => {
-      router.push('/signup')
-    }
-
-    const redirectHome = () => {
-      router.push('/home')
-    }
-
-    onBeforeMount(() => {
-      authStore.actions.setLoggedInUserAction()
-    })
-
-    const userLogout = () => {
-      if (authStore.authState.loggedInUser)
-        authStore.actions.userLogoutAction({
-          username: authStore.authState.loggedInUser.user.username,
-          password: authStore.authState.loggedInUser.user.password
-        })
+const userLogout = () => {
+  if (authState?.loggedInUser) {
+    authStore.actions.userLogoutAction().then(() => {
+      localStorage.removeItem('loggedInUser')
       router.push('/')
-    }
-
-    const userPage = () => {
-      router.push('/profile')
-    }
-
-    return {
-      authStore,
-      goToLoginPage,
-      goToSignUpPage,
-      redirectHome,
-      userLogout,
-      userPage
-    }
+    })
   }
-})
+}
 </script>
-
-<style scoped></style>

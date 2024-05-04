@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import type { AuthState, NewUser, LoggedInUser } from './auth.type'
+import type { AuthState, NewUser, LoggedInUser, UserLoginData } from './auth.type'
 import { userLogin, createUser, userLogout, setLoggedInUser } from './auth.actions'
 
 const initialState: AuthState = {
@@ -10,9 +10,9 @@ const initialState: AuthState = {
 }
 
 interface AuthActions {
-  userLoginAction: () => Promise<void>
+  userLoginAction: (credentials: UserLoginData) => Promise<void>
   userLogoutAction: () => Promise<void>
-  createUserAction: () => Promise<void>
+  createUserAction: (credentials: UserLoginData) => Promise<void>
   setLoggedInUserAction: () => Promise<void>
 }
 
@@ -48,10 +48,13 @@ const createAuthStore = () => {
       }
     },
 
-    async userLogoutAction({ username, password }: { username: string; password: string }) {
+    async userLogoutAction() {
       authState.loading = true
       try {
-        await userLogout({ username, password })
+        await userLogout({
+          username: authState.loggedInUser?.user.username!,
+          password: authState.loggedInUser?.user.password!
+        })
         authState.loggedInUser = null
         authState.error = ''
       } catch (error) {
