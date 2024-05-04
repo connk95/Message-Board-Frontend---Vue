@@ -48,17 +48,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeMount, inject } from 'vue'
-import { useRouter } from 'vue-router'
-// import createPostStore from '../components/post/post.store'
-// import createAuthStore from '../components/auth/auth.store'
+import { onMounted, inject } from 'vue'
 import type { PostState } from '@/components/post/post.type'
 import type { AuthState } from '@/components/auth/auth.type'
 import type { PostStoreType } from '../components/post/post.store'
-import type { AuthStoreType } from '../components/auth/auth.store'
 
 const authState = inject<AuthState>('authState')
-const authStore = inject<AuthStoreType>('authStore')!
 const postState = inject<PostState>('postState')
 const postStore = inject<PostStoreType>('postStore')!
 
@@ -66,5 +61,3 @@ onMounted(() => {
   postStore.actions.fetchPostsAction()
 })
 </script>
-
-<style scoped></style>

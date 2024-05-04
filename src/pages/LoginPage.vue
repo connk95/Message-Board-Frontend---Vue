@@ -1,5 +1,4 @@
 <template>
-  <!-- <svg-icon type="mdi" :path="path"></svg-icon> -->
   <v-sheet
     v-if="!authState?.loggedInUser?.user"
     class="mx-auto"
@@ -23,31 +22,23 @@
       </div>
     </v-form>
   </v-sheet>
-  <v-typography v-else class="text-h5">
-    You are already signed in
-  </v-typography>
+  <v-typography v-else class="text-h5"> You are already signed in </v-typography>
 </template>
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-// import SvgIcon from '@jamescoyle/vue-icon'
-// import { mdiShieldLockOutline } from '@mdi/js'
 import type { AuthState } from '@/components/auth/auth.type'
 import type { AuthStoreType } from '../components/auth/auth.store'
 
 const authState = inject<AuthState>('authState')
 const authStore = inject<AuthStoreType>('authStore')!
 const router = useRouter()
-const username = ref('')
-const password = ref('')
+let username = ref<string>('')
+let password = ref<string>('')
 
 const validateLogin = () => {
   authStore.actions.userLoginAction({ username: username.value, password: password.value })
   router.push('/home')
 }
-
-// onUpdated(() => {
-//   authStore.actions.setLoggedInUserAction()
-// })
 </script>

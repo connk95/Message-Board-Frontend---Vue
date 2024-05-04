@@ -1,4 +1,4 @@
-import { reactive, readonly } from 'vue'
+import { reactive } from 'vue'
 import type { PostState, Post } from './post.type'
 import type { Comment } from './comment.type'
 import { fetchPosts, fetchSinglePost, newPost, newComment } from './post.actions'

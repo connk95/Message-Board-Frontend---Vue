@@ -36,9 +36,9 @@ import type { AuthStoreType } from '../components/auth/auth.store'
 const authState = inject<AuthState>('authState')
 const authStore = inject<AuthStoreType>('authStore')!
 const router = useRouter()
-const username = ref('')
-const email = ref('')
-const password = ref('')
+let username = ref<string>('')
+let email = ref<string>('')
+let password = ref<string>('')
 
 const validateSignup = () => {
   authStore.actions.createUserAction({

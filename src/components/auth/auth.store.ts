@@ -12,7 +12,7 @@ const initialState: AuthState = {
 interface AuthActions {
   userLoginAction: (credentials: UserLoginData) => Promise<void>
   userLogoutAction: () => Promise<void>
-  createUserAction: (credentials: UserLoginData) => Promise<void>
+  createUserAction: (credentials: NewUser) => Promise<void>
   setLoggedInUserAction: () => Promise<void>
 }
 
