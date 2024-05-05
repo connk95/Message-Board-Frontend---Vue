@@ -5,7 +5,6 @@ Welcome to my message board! This project is a recreation of the same project, p
 ## Table of Contents
 
 - [Features](https://github.com/connk95/Message-Board-Frontend---Vue/blob/main/README.md#features)
-- [Demo](https://github.com/Message-Board-Frontend---Vue/blob/main/README.md#features)
 - [Installation](https://github.com/connk95/Message-Board-Frontend---Vue/blob/main/README.md#installation)
 - [Code Description](https://github.com/connk95/Message-Board-Frontend---Vue/blob/main/README.md#code-description)
 - [Usage](https://github.com/connk95/Message-Board-Frontend---Vue/blob/main/README.md#usage)
@@ -19,10 +18,6 @@ Welcome to my message board! This project is a recreation of the same project, p
 - Make posts which can been seen by users across the site.
 - Be social by interracting with and replying to other users' posts.
 - View your post and comment history in the user tab.
-
-## Demo
-
-https://heroic-custard-3bcb1a.netlify.app/
 
 ## Installation
 
@@ -38,7 +33,7 @@ https://heroic-custard-3bcb1a.netlify.app/
    cd Message-Board-Frontend---Vue
    ```
 
-3. Run the app and view in your browser (You must have a backend running simultaneously!):
+3. Run the app and view in your browser:
    ```
    npm run start
    ```
