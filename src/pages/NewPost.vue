@@ -6,10 +6,10 @@
   >
     <v-row no-gutters class="align-center mt-10 w-100" style="max-width: 900px">
       <v-col cols="12" class="justify-center w-100">
-        <v-text-field v-model="title" label="Title"></v-text-field>
+        <v-text-field v-model="title" label="Title" variant="outlined"></v-text-field>
       </v-col>
       <v-col cols="12" class="justify-center w-100">
-        <v-textarea v-model="post" label="Post"></v-textarea>
+        <v-textarea v-model="post" label="Post" variant="outlined"></v-textarea>
       </v-col>
     </v-row>
     <v-row no-gutters class="align-center mt-2 w-100" style="max-width: 900px">

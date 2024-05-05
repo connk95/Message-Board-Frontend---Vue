@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-// import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import createAuthStore from './components/auth/auth.store'
 import { createVuetify } from 'vuetify/lib/framework.mjs'
@@ -11,8 +10,6 @@ import 'vuetify/styles'
 import type { AuthState } from './components/auth/auth.type'
 import type { PostState } from './components/post/post.type'
 import createPostStore from './components/post/post.store'
-
-// createApp(App).use(router).use(vuetify).mount('#app')
 
 const app = createApp(App)
 

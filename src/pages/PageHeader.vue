@@ -40,8 +40,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { useRouter } from 'vue-router'
-// import createAuthStore from '../components/auth/auth.store'
-// import { onBeforeMount } from 'vue'
 import type { AuthState } from '@/components/auth/auth.type'
 import type { AuthStoreType } from '../components/auth/auth.store'
 
@@ -49,16 +47,19 @@ const authState = inject<AuthState>('authState')
 const authStore = inject<AuthStoreType>('authStore')!
 const router = useRouter()
 
-// onBeforeMount(() => {
-//   authStore.actions.setLoggedInUserAction()
-// })
-
-const userLogout = () => {
+const userLogout = async () => {
   if (authState?.loggedInUser) {
-    authStore.actions.userLogoutAction().then(() => {
-      localStorage.removeItem('loggedInUser')
-      router.push('/')
-    })
+    localStorage.removeItem('loggedInUser')
+    router.push('/')
+
+    await authStore.actions
+      .userLogoutAction({
+        username: authState.loggedInUser.user.username,
+        password: authState.loggedInUser.user.password
+      })
+      .then(() => {
+        window.location.reload()
+      })
   }
 }
 </script>

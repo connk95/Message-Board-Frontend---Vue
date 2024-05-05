@@ -8,8 +8,14 @@
   >
     <v-typography class="text-h5">Sign In</v-typography>
     <v-form ref="form" style="margin-top: 4vh">
-      <v-text-field v-model="username" label="Username*" required></v-text-field>
-      <v-text-field v-model="password" label="Password*" required type="password"></v-text-field>
+      <v-text-field v-model="username" label="Username*" required variant="outlined"></v-text-field>
+      <v-text-field
+        v-model="password"
+        label="Password*"
+        required
+        type="password"
+        variant="outlined"
+      ></v-text-field>
       <div class="d-flex flex-column">
         <v-btn
           class="mt-4"

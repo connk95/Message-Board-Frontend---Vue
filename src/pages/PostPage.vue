@@ -53,6 +53,7 @@
           v-if="authState?.loggedInUser"
           v-model="comment"
           label="Comment"
+          variant="outlined"
         ></v-text-field>
       </v-col>
     </v-row>

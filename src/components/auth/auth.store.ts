@@ -11,7 +11,7 @@ const initialState: AuthState = {
 
 interface AuthActions {
   userLoginAction: (credentials: UserLoginData) => Promise<void>
-  userLogoutAction: () => Promise<void>
+  userLogoutAction: (credentials: UserLoginData) => Promise<void>
   createUserAction: (credentials: NewUser) => Promise<void>
   setLoggedInUserAction: () => Promise<void>
 }
@@ -48,12 +48,12 @@ const createAuthStore = () => {
       }
     },
 
-    async userLogoutAction() {
+    async userLogoutAction({ username, password }: { username: string; password: string }) {
       authState.loading = true
       try {
         await userLogout({
-          username: authState.loggedInUser?.user.username!,
-          password: authState.loggedInUser?.user.password!
+          username,
+          password
         })
         authState.loggedInUser = null
         authState.error = ''

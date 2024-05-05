@@ -6,7 +6,7 @@
   >
     <v-img :src="currentImage" width="65vw"></v-img>
     <v-col cols="12" md="4" class="d-flex flex-column align-center justify-center">
-      <v-container v-if="authState.loggedInUser?.access_token" class="my-2">
+      <v-container v-if="authState?.loggedInUser?.access_token" class="my-2">
         <v-typography class="white--text" style="font-size: 20px; color: white">
           Join ChatBox today.
         </v-typography>

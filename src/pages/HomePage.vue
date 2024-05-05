@@ -25,6 +25,7 @@
           v-if="postState?.loading"
           indeterminate
           color="black"
+          style="margin-left: 2vw; margin-top: 2vh; width: 60vw"
         ></v-progress-circular>
         <v-card
           v-else
